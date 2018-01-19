@@ -1,14 +1,17 @@
 /* eslint-disable react/jsx-first-prop-new-line */
-import { createStore, applyMiddleware, compose } from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 /* eslint-enable global-require, react/jsx-first-prop-new-line */
 import thunk from 'redux-thunk';
-import { routerMiddleware } from 'react-router-redux';
-import { browserHistory } from 'react-router';
+import {routerMiddleware} from 'react-router-redux';
+import {createLogger} from 'redux-logger';
+import {browserHistory} from 'react-router';
 
 import rootReducer from '../reducers';
 
 const reduxRouterMiddleware = routerMiddleware(browserHistory);
+const logger = createLogger();
 const middleware = [
+  logger,
   reduxRouterMiddleware,
   thunk
 ].filter(Boolean);

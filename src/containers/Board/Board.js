@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { DragDropContext } from 'react-dnd';
+import React, {Component, PropTypes} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import * as ListsActions from '../../actions/lists';
@@ -38,10 +38,11 @@ export default class Board extends Component {
     this.scrollLeft = this.scrollLeft.bind(this);
     this.stopScrolling = this.stopScrolling.bind(this);
     this.startScrolling = this.startScrolling.bind(this);
-    this.state = { isScrolling: false };
+    this.state = {isScrolling: false};
   }
 
   componentWillMount() {
+    console.log('props', this.props);
     this.props.getLists(10);
   }
 
@@ -49,10 +50,10 @@ export default class Board extends Component {
     // if (!this.state.isScrolling) {
     switch (direction) {
       case 'toLeft':
-        this.setState({ isScrolling: true }, this.scrollLeft());
+        this.setState({isScrolling: true}, this.scrollLeft());
         break;
       case 'toRight':
-        this.setState({ isScrolling: true }, this.scrollRight());
+        this.setState({isScrolling: true}, this.scrollRight());
         break;
       default:
         break;
@@ -64,6 +65,7 @@ export default class Board extends Component {
     function scroll() {
       document.getElementsByTagName('main')[0].scrollLeft += 10;
     }
+
     this.scrollInterval = setInterval(scroll, 10);
   }
 
@@ -71,11 +73,12 @@ export default class Board extends Component {
     function scroll() {
       document.getElementsByTagName('main')[0].scrollLeft -= 10;
     }
+
     this.scrollInterval = setInterval(scroll, 10);
   }
 
   stopScrolling() {
-    this.setState({ isScrolling: false }, clearInterval(this.scrollInterval));
+    this.setState({isScrolling: false}, clearInterval(this.scrollInterval));
   }
 
   moveCard(lastX, lastY, nextX, nextY) {
@@ -83,12 +86,12 @@ export default class Board extends Component {
   }
 
   moveList(listId, nextX) {
-    const { lastX } = this.findList(listId);
+    const {lastX} = this.findList(listId);
     this.props.moveList(lastX, nextX);
   }
 
   findList(id) {
-    const { lists } = this.props;
+    const {lists} = this.props;
     const list = lists.filter(l => l.id === id)[0];
 
     return {
@@ -98,11 +101,11 @@ export default class Board extends Component {
   }
 
   render() {
-    const { lists } = this.props;
+    const {lists} = this.props;
 
     return (
-      <div style={{ height: '100%' }}>
-        <CustomDragLayer snapToGrid={false} />
+      <div style={{height: '100%'}}>
+        <CustomDragLayer snapToGrid={false}/>
         {lists.map((item, i) =>
           <CardsContainer
             key={item.id}
